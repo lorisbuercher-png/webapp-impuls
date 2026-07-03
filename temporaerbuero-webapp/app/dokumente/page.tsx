@@ -1,0 +1,2 @@
+import Nav from '@/components/Nav'; const docs = ['Lebenslauf.pdf','Arbeitsvertrag.pdf','Lohnabrechnung.pdf'];
+export default function Dokumente(){return <><Nav/><main className="mx-auto max-w-4xl px-4 py-12"><h1 className="mb-8 text-4xl font-bold">Dokumente</h1><div className="grid gap-4">{docs.map(doc => <div key={doc} className="card flex items-center justify-between"><span>{doc}</span><button className="btn border border-white/20">Download</button></div>)}</div></main></>}

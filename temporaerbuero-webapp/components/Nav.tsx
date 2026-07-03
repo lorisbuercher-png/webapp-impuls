@@ -1,0 +1,3 @@
+import Link from 'next/link';
+const links = [['Start','/'],['Jobs','/jobs'],['Login','/login'],['Registrierung','/register'],['Profil','/profil'],['Dokumente','/dokumente'],['Admin','/dashboard']];
+export default function Nav() { return <nav className="sticky top-0 z-20 border-b border-white/10 bg-primary/80 backdrop-blur"><div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4"><Link href="/" className="text-xl font-bold">Tempora</Link><div className="hidden gap-4 md:flex">{links.map(([label, href]) => <Link key={href} href={href} className="text-sm text-white/80 hover:text-secondary">{label}</Link>)}</div></div></nav>; }
