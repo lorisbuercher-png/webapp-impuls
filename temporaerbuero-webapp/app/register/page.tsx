@@ -1,2 +1,0 @@
-import Nav from '@/components/Nav';
-export default function Register(){return <><Nav/><main className="mx-auto max-w-md px-4 py-12"><div className="card"><h1 className="mb-6 text-3xl font-bold">Registrierung</h1><input className="input mb-4" placeholder="Vorname Nachname"/><input className="input mb-4" placeholder="E-Mail"/><input className="input mb-6" placeholder="Passwort" type="password"/><button className="btn-primary w-full">Konto erstellen</button></div></main></>}
