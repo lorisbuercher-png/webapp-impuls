@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import AdminLayout from "../../../components/AdminLayout";
-import { operationsRepository } from "../../../lib/operations-repository";
+import { operationsRepository } from "../../../lib/operations-runtime";
 import type { Person, Report, ReportStatus } from "../../../lib/operations";
 
 const filters: Array<"Alle" | ReportStatus> = ["Alle", "Fehlt", "Eingegangen", "In Prüfung", "Freigegeben"];
