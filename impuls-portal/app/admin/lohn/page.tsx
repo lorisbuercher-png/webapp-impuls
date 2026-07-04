@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import AdminLayout from "../../../components/AdminLayout";
-import { operationsRepository } from "../../../lib/operations-repository";
+import { operationsRepository } from "../../../lib/operations-runtime";
 import type { PayrollRelease, PayrollStatus, Person } from "../../../lib/operations";
 
 const filters: Array<"Alle" | PayrollStatus> = ["Alle", "Bereit zur Auszahlung", "In Prüfung", "Rapport fehlt", "Ausbezahlt"];
