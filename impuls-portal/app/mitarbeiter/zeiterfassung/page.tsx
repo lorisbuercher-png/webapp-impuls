@@ -1,41 +1,4 @@
+"use client";
+import { useState } from "react";
 import MitarbeiterLayout from "../../../components/MitarbeiterLayout";
-
-export default function Zeiterfassung() {
-  return (
-    <MitarbeiterLayout>
-      <h1 className="text-4xl font-bold">Zeiterfassung</h1>
-
-      <p className="mt-2 text-gray-500">
-        Erfasse deine Arbeitszeit oder lade einen Rapport als Foto hoch.
-      </p>
-
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-bold">Arbeitszeit erfassen</h2>
-
-          <input className="mt-6 w-full rounded-2xl bg-[#F7F8FC] px-4 py-3" placeholder="Datum" />
-          <input className="mt-4 w-full rounded-2xl bg-[#F7F8FC] px-4 py-3" placeholder="Startzeit" />
-          <input className="mt-4 w-full rounded-2xl bg-[#F7F8FC] px-4 py-3" placeholder="Endzeit" />
-          <input className="mt-4 w-full rounded-2xl bg-[#F7F8FC] px-4 py-3" placeholder="Pause" />
-
-          <button className="mt-6 w-full rounded-2xl bg-[#6D5DF6] py-3 font-semibold text-white">
-            Stunden speichern
-          </button>
-        </div>
-
-        <div className="rounded-3xl bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-bold">Rapport hochladen</h2>
-
-          <label className="mt-6 block rounded-3xl border-2 border-dashed border-[#6D5DF6]/40 p-10 text-center">
-            <div className="text-4xl">📷</div>
-            <p className="mt-4 font-semibold">Foto oder PDF hochladen</p>
-            <p className="mt-2 text-sm text-gray-500">
-              Später liest KI daraus Datum, Zeiten und Stunden.
-            </p>
-            <input type="file" className="hidden" />
-          </label>
-        </div>
-      </div>
-    </MitarbeiterLayout>
-  );
-}
+export default function Zeiterfassung(){const [von,setVon]=useState("07:00");const [bis,setBis]=useState("16:30");const [pause,setPause]=useState(30);const [status,setStatus]=useState("");const [tage,setTage]=useState([{tag:"Montag",zeit:"8.5 h",status:"Erfasst"},{tag:"Dienstag",zeit:"8.0 h",status:"Erfasst"}]);const save=()=>{const diff=(new Date(`2026-01-01T${bis}`).getTime()-new Date(`2026-01-01T${von}`).getTime())/3600000-pause/60;setTage(v=>[...v,{tag:"Heute",zeit:`${Math.max(0,diff).toFixed(1)} h`,status:"Eingereicht"}]);setStatus("Arbeitszeit wurde zur Prüfung eingereicht.")};return <MitarbeiterLayout><div className="mx-auto max-w-5xl"><h1 className="text-3xl font-black">Zeiterfassung</h1><p className="mt-2 text-gray-500">Arbeitszeit erfassen und als Rapport einreichen.</p>{status&&<div className="mt-5 rounded-2xl bg-emerald-50 p-4 font-semibold text-emerald-700">✓ {status}</div>}<div className="mt-7 grid gap-6 lg:grid-cols-2"><div className="rounded-3xl border bg-white p-6"><h2 className="text-xl font-bold">Heute erfassen</h2><div className="mt-5 grid grid-cols-2 gap-4"><label className="text-sm font-semibold">Von<input type="time" value={von} onChange={e=>setVon(e.target.value)} className="mt-2 w-full rounded-xl border p-3"/></label><label className="text-sm font-semibold">Bis<input type="time" value={bis} onChange={e=>setBis(e.target.value)} className="mt-2 w-full rounded-xl border p-3"/></label></div><label className="mt-4 block text-sm font-semibold">Pause (Minuten)<input type="number" value={pause} onChange={e=>setPause(Number(e.target.value))} className="mt-2 w-full rounded-xl border p-3"/></label><button onClick={save} className="mt-5 w-full rounded-xl bg-[#6D5DF6] p-3 font-bold text-white">Zeit einreichen</button></div><div className="rounded-3xl border bg-white p-6"><h2 className="text-xl font-bold">Diese Woche</h2><div className="mt-4 space-y-3">{tage.map((x,i)=><div key={i} className="flex items-center justify-between rounded-2xl bg-gray-50 p-4"><div><b>{x.tag}</b><p className="text-sm text-gray-500">{x.zeit}</p></div><span className="rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700">{x.status}</span></div>)}</div></div></div></div></MitarbeiterLayout>}
