@@ -1,24 +1,6 @@
+"use client";
+import { useState } from "react";
 import MitarbeiterLayout from "../../../components/MitarbeiterLayout";
-
-export default function Nachrichten() {
-  const nachrichten = [
-    ["Neue Lohnabrechnung verfügbar", "Deine Lohnabrechnung wurde hochgeladen."],
-    ["Dokument fehlt", "Bitte lade deinen aktuellen Lebenslauf hoch."],
-    ["Einsatz bestätigt", "Dein Einsatz bei Muster AG wurde bestätigt."],
-  ];
-
-  return (
-    <MitarbeiterLayout>
-      <h1 className="text-4xl font-bold">Nachrichten</h1>
-
-      <div className="mt-8 space-y-4">
-        {nachrichten.map(([titel, text]) => (
-          <div key={titel} className="rounded-3xl bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-bold">{titel}</h2>
-            <p className="mt-2 text-gray-500">{text}</p>
-          </div>
-        ))}
-      </div>
-    </MitarbeiterLayout>
-  );
-}
+type Msg={from:"me"|"other";text:string;time:string;source?:string};
+const initial:Msg[]=[{from:"other",text:"Hallo Max, dein Rapport für KW 33 wurde von der KI geprüft. Bitte bestätige die erkannten Stunden.",time:"08:30",source:"IMPULS"},{from:"me",text:"Danke, ich prüfe ihn heute.",time:"08:42"},{from:"other",text:"Dein Einsatz bei ABB bleibt nächste Woche unverändert: 07:00–16:00 Uhr.",time:"09:10",source:"Loris · Berater"}];
+export default function Nachrichten(){const [messages,setMessages]=useState(initial);const [text,setText]=useState("");function send(){if(!text.trim())return;setMessages([...messages,{from:"me",text,time:new Date().toLocaleTimeString("de-CH",{hour:"2-digit",minute:"2-digit"})}]);setText("")}return <MitarbeiterLayout><div className="mx-auto grid max-w-[1450px] overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm lg:grid-cols-[340px_1fr]"><aside className="border-r border-gray-100"><div className="p-5"><h1 className="text-2xl font-black">Nachrichten</h1><p className="text-sm text-gray-500">Alles an einem Ort statt in WhatsApp.</p><input placeholder="Unterhaltungen suchen…" className="mt-4 w-full rounded-xl border border-gray-200 px-4 py-3"/></div><div className="divide-y divide-gray-100">{[["Loris Bürcher","Dein Einsatz bleibt unverändert","2","LB"],["IMPULS Backoffice","Rapport zur Bestätigung bereit","1","IB"],["ABB Einsatzleitung","Information zur Frühschicht","","AB"]].map((x,i)=><button key={x[0]} className={`flex w-full gap-3 p-4 text-left ${i===0?"bg-purple-50":"hover:bg-gray-50"}`}><span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#6D5DF6] font-bold text-white">{x[3]}</span><div className="min-w-0 flex-1"><div className="flex justify-between"><b className="text-sm">{x[0]}</b>{x[2]&&<span className="grid h-5 w-5 place-items-center rounded-full bg-red-500 text-xs text-white">{x[2]}</span>}</div><p className="truncate text-xs text-gray-500">{x[1]}</p></div></button>)}</div></aside><section className="flex min-h-[720px] flex-col"><header className="flex items-center justify-between border-b border-gray-100 p-5"><div><h2 className="font-black">Loris Bürcher</h2><p className="text-xs text-green-600">● Dein persönlicher Berater</p></div><div className="flex gap-2"><button className="rounded-lg border px-3 py-2 text-sm font-bold">Rückruf</button><a href="/mitarbeiter/assistent" className="rounded-lg bg-purple-50 px-3 py-2 text-sm font-bold text-[#6D5DF6]">✦ KI-Assistent</a></div></header><div className="flex-1 space-y-4 overflow-y-auto bg-[#F7F8FC] p-5">{messages.map((m,i)=><div key={i} className={`flex ${m.from==="me"?"justify-end":"justify-start"}`}><div className={`max-w-[70%] rounded-2xl px-4 py-3 shadow-sm ${m.from==="me"?"bg-[#6D5DF6] text-white":"border border-gray-200 bg-white"}`}>{m.source&&<p className="mb-1 text-xs font-black text-[#6D5DF6]">{m.source}</p>}<p className="text-sm">{m.text}</p><p className={`mt-1 text-right text-[10px] ${m.from==="me"?"text-purple-200":"text-gray-400"}`}>{m.time}</p></div></div>)}</div><div className="border-t border-gray-100 p-4"><div className="flex gap-2"><button className="rounded-xl border px-4 text-xl">＋</button><input value={text} onChange={e=>setText(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Nachricht schreiben…" className="min-w-0 flex-1 rounded-xl border border-gray-200 px-4 py-3"/><button onClick={send} className="rounded-xl bg-[#6D5DF6] px-5 font-bold text-white">Senden</button></div><div className="mt-2 flex gap-2 text-xs"><button className="rounded-full bg-gray-100 px-3 py-1.5">Rapport-Frage</button><button className="rounded-full bg-gray-100 px-3 py-1.5">Krankmeldung</button><button className="rounded-full bg-gray-100 px-3 py-1.5">Rückruf anfordern</button></div></div></section></div></MitarbeiterLayout>}
