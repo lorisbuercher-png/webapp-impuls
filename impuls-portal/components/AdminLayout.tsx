@@ -1,22 +1,10 @@
 import PortalSwitcher from "./PortalSwitcher";
-
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const menu = [
-    ["🏠", "Dashboard", "/admin/dashboard"], ["👷", "Mitarbeiter", "/admin/mitarbeiter"],
-    ["👥", "Kandidaten", "/admin/kandidaten"], ["📄", "Dokumente", "/admin/dokumente"],
-    ["💰", "Lohn", "/admin/lohn"], ["⚠️", "Bewilligungen", "/admin/bewilligungen"],
-    ["📤", "Rapporte", "/admin/rapporte"], ["💬", "Kommunikation", "/admin/kommunikation"],
-    ["⚙️", "Einstellungen", "/admin/einstellungen"],
-  ];
-  return <main className="flex min-h-screen bg-[#F7F8FC] text-[#1F2937]">
-    <aside className="hidden w-72 shrink-0 border-r border-gray-200 bg-white p-6 lg:block">
-      <a href="/" className="text-2xl font-black">IMPULS <span className="text-[#6D5DF6]">ONE</span></a>
-      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.25em] text-gray-400">Adminportal</p>
-      <nav className="mt-10 space-y-2">{menu.map(([icon,label,href]) => <a key={href} href={href} className="flex items-center gap-3 rounded-2xl px-4 py-3 font-medium text-gray-600 transition hover:bg-[#6D5DF6] hover:text-white"><span>{icon}</span><span>{label}</span></a>)}</nav>
-    </aside>
-    <section className="flex min-h-screen min-w-0 flex-1 flex-col">
-      <header className="flex flex-col gap-4 border-b border-gray-200 bg-white px-5 py-5 md:flex-row md:items-center md:justify-between md:px-8"><div><p className="text-sm text-gray-500">IMPULS Swiss</p><h1 className="text-xl font-bold">Adminbereich</h1></div><PortalSwitcher current="Admin" /></header>
-      <div className="flex-1 p-5 md:p-8">{children}</div>
-    </section>
-  </main>;
+export default function AdminLayout({children}:{children:React.ReactNode}){
+ const sections=[
+  ["OPERATIONS",[["▣","Dashboard","/admin/dashboard"],["▤","Einsätze","/admin/mitarbeiter"],["☷","Rapporte","/admin/rapporte"],["♢","Lohnfreigabe","/admin/lohn"]]],
+  ["PERSONAL",[["♙","Kandidaten","/admin/kandidaten"],["♙","Mitarbeiter","/admin/mitarbeiter"],["☑","Bewilligungen","/admin/bewilligungen"],["▤","Dokumente","/admin/dokumente"]]],
+  ["KOMMUNIKATION",[["▢","Nachrichten","/admin/kommunikation"],["☑","Aufgaben","/admin/dashboard"]]],
+  ["SYSTEM",[["⚙","Einstellungen","/admin/einstellungen"]]],
+ ] as const;
+ return <main className="flex min-h-screen bg-[#F7F8FC] text-slate-900"><aside className="hidden w-64 shrink-0 bg-[#0D1B32] px-4 py-6 text-white lg:flex lg:flex-col"><a href="/" className="flex items-center gap-3 px-2 text-xl font-black"><span className="grid h-9 w-9 place-items-center rounded-xl bg-[#6D5DF6]">◉</span>IMPULS ONE</a><div className="mt-8 flex-1 space-y-7">{sections.map(([title,items])=><div key={title}><p className="mb-2 px-3 text-[10px] font-bold tracking-widest text-slate-500">{title}</p><nav className="space-y-1">{items.map(([icon,label,href])=><a key={label} href={href} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-200 transition hover:bg-[#6D5DF6]/30 hover:text-white"><span className="text-lg text-slate-400">{icon}</span>{label}</a>)}</nav></div>)}</div><a href="/" className="px-3 text-sm text-slate-300">← Menü einklappen</a></aside><section className="min-w-0 flex-1"><header className="flex flex-col gap-4 border-b bg-white px-6 py-4 xl:flex-row xl:items-center xl:justify-between"><div className="flex items-center gap-4"><span className="text-xl">☰</span><div className="hidden w-80 rounded-xl bg-slate-100 px-4 py-2 text-sm text-slate-400 md:block">⌕ Suche nach Mitarbeitern, Kunden, Einsätzen…</div></div><div className="flex items-center justify-between gap-4"><button className="grid h-10 w-10 place-items-center rounded-full bg-[#6D5DF6] text-xl text-white">+</button><span>🔔</span><span>💬</span><div className="hidden text-right md:block"><b className="text-sm">Loris: Backoffice</b><p className="text-xs text-slate-400">Administrator</p></div><PortalSwitcher current="Admin"/></div></header><div className="p-5 md:p-7">{children}</div></section></main>
 }
